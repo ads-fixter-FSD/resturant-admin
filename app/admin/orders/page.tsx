@@ -66,7 +66,7 @@ const OrderPage: React.FC = () => {
                             <IoBagHandleOutline size={18} />
                           </div>
                           <div>
-                            <p className="font-black text-gray-800 text-[12px] tracking-tighter uppercase">#{order.transactionId?.slice(-8)}</p>
+                            <p className="font-black text-gray-800 text-[12px] tracking-tighter uppercase">#{order.transactionId}</p>
                             <p className="text-[10px] text-gray-400 font-bold">{new Date(order.createdAt).toLocaleDateString("en-GB")}</p>
                           </div>
                         </div>
