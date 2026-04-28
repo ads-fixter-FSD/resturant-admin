@@ -146,6 +146,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       icon: <LucideMessageSquareMore />,
       path: "/admin/owner-message",
     },
+    {
+      name: "Profile",
+      icon: <IoPeopleOutline />,
+      path: "/admin/profile",
+    },
     { name: "FAQ", icon: <IoHelpCircleOutline />, path: "/admin/faq" },
     { name: "Settings", icon: <IoSettingsOutline />, path: "/admin/settings" },
   ];

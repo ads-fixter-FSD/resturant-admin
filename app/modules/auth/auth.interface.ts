@@ -3,7 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   role: "admin" | "user";
-  phone?: string; // নতুন যোগ করা হয়েছে
+  phone?: string;
   image?: string;
 }
 
@@ -12,7 +12,8 @@ export interface IAuthResponse {
   message: string;
   data: {
     user: IUser;
-    token: string; 
+    token: string;
+    refreshToken: string;
   };
 }
 
