@@ -5,9 +5,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { IoCloseOutline, IoImageOutline } from "react-icons/io5";
 import Image from "next/image";
-import { ICategory } from "@/types/category";
-import { IChef } from "@/types/menu";
+
 import { createMenu, updateMenu } from "@/app/modules/menu/menu.api";
+import { ICategory, IChef } from "@/types/menu";
 
 interface MenuModalProps {
   isOpen: boolean;

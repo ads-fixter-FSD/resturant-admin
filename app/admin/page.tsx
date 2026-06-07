@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import jsPDF from "jspdf";
 import { domToPng } from "modern-screenshot";
 import {
@@ -46,14 +52,32 @@ import Link from "next/link";
 type FilterPeriod = "all" | "day" | "week" | "month";
 
 const MONTHS = [
-  "January","February","March","April",
-  "May","June","July","August",
-  "September","October","November","December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 // ─── Skeleton Components (কোনো পরিবর্তন নেই) ────────────────────────────────
-const SkeletonPulse = ({ className }: { className?: string }) => (
-  <div className={`animate-pulse bg-gray-200 rounded-xl ${className}`} />
+const SkeletonPulse = ({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <div
+    className={`animate-pulse bg-gray-200 rounded-xl ${className}`}
+    style={style}
+  />
 );
 
 const StatCardSkeleton = () => (
@@ -85,7 +109,7 @@ const ChartSkeleton = () => (
         <div key={i} className="flex-1 flex flex-col justify-end">
           <SkeletonPulse
             className="w-full rounded-t-lg"
-            style={{ height: `${h}%` } as any}
+            style={{ height: `${h}%` }}
           />
         </div>
       ))}
@@ -285,8 +309,12 @@ export default function DashboardPage() {
     }
   }, [period, selectedMonth]);
 
-  useEffect(() => { fetchAllData(); }, [fetchAllData]);
-  useEffect(() => { fetchFilteredStats(); }, [fetchFilteredStats]);
+  useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
+  useEffect(() => {
+    fetchFilteredStats();
+  }, [fetchFilteredStats]);
 
   // ✅ CHANGED: "all" label add করা হয়েছে
   const periodLabel = useMemo(() => {
@@ -335,7 +363,7 @@ export default function DashboardPage() {
         icon: <TrendingUp size={20} />,
         color: "#10B981",
         bg: "#ECFDF5",
-        chartData: [{ uv: 20 },{ uv: 40 },{ uv: 35 },{ uv: 50 },{ uv: 45 }],
+        chartData: [{ uv: 20 }, { uv: 40 }, { uv: 35 }, { uv: 50 }, { uv: 45 }],
       },
       {
         label: "System Users",
@@ -346,7 +374,7 @@ export default function DashboardPage() {
         icon: <Users size={20} />,
         color: "#8B5CF6",
         bg: "#F5F3FF",
-        chartData: [{ uv: 10 },{ uv: 25 },{ uv: 20 },{ uv: 30 },{ uv: 40 }],
+        chartData: [{ uv: 10 }, { uv: 25 }, { uv: 20 }, { uv: 30 }, { uv: 40 }],
       },
     ],
     [stats, users, filteredStats, periodLabel],
@@ -357,13 +385,23 @@ export default function DashboardPage() {
     if (!el) return;
     const toastId = toast.loading("Generating PDF Report...");
     try {
-      const dataUrl = await domToPng(el, { scale: 2, backgroundColor: "#F8F9FA" });
+      const dataUrl = await domToPng(el, {
+        scale: 2,
+        backgroundColor: "#F8F9FA",
+      });
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "px",
         format: [el.offsetWidth * 2, el.offsetHeight * 2],
       });
-      pdf.addImage(dataUrl, "PNG", 0, 0, el.offsetWidth * 2, el.offsetHeight * 2);
+      pdf.addImage(
+        dataUrl,
+        "PNG",
+        0,
+        0,
+        el.offsetWidth * 2,
+        el.offsetHeight * 2,
+      );
       pdf.save(`Analytics-Report-${new Date().toLocaleDateString()}.pdf`);
       toast.success("Report Saved!", { id: toastId });
     } catch {
@@ -399,15 +437,21 @@ export default function DashboardPage() {
           <SkeletonPulse className="w-20 h-7 rounded-xl" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {Array.from({ length: 4 }).map((_, i) => <StatCardSkeleton key={i} />)}
+          {Array.from({ length: 4 }).map((_, i) => (
+            <StatCardSkeleton key={i} />
+          ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-          <div className="lg:col-span-8"><ChartSkeleton /></div>
+          <div className="lg:col-span-8">
+            <ChartSkeleton />
+          </div>
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-4">
               <SkeletonPulse className="w-32 h-4 mx-auto" />
               <div className="grid grid-cols-2 gap-4">
-                {Array.from({ length: 4 }).map((_, i) => <SkeletonPulse key={i} className="h-20 rounded-3xl" />)}
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <SkeletonPulse key={i} className="h-20 rounded-3xl" />
+                ))}
               </div>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6">
@@ -433,7 +477,9 @@ export default function DashboardPage() {
             <SkeletonPulse className="w-20 h-8 rounded-xl" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 3 }).map((_, i) => <StockCardSkeleton key={i} />)}
+            {Array.from({ length: 3 }).map((_, i) => (
+              <StockCardSkeleton key={i} />
+            ))}
           </div>
         </div>
       </div>
@@ -574,7 +620,11 @@ export default function DashboardPage() {
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-14 opacity-20 group-hover:opacity-40 transition-all">
                 <MiniChart
-                  data={stat.chartData.length > 0 ? stat.chartData : [{ uv: 10 }, { uv: 20 }]}
+                  data={
+                    stat.chartData.length > 0
+                      ? stat.chartData
+                      : [{ uv: 10 }, { uv: 20 }]
+                  }
                   color={stat.color}
                 />
               </div>
@@ -634,7 +684,11 @@ export default function DashboardPage() {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={filteredStats.chartData}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="#F3F4F6"
+                    />
                     <XAxis
                       dataKey="name"
                       axisLine={false}
@@ -678,18 +732,38 @@ export default function DashboardPage() {
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Menus", icon: <LayoutGrid size={18} />, link: "/admin/menus" },
-                  { label: "Orders", icon: <ShoppingBag size={18} />, link: "/admin/orders" },
-                  { label: "Users", icon: <Users size={18} />, link: "/admin/user-management" },
-                  { label: "Settings", icon: <Settings size={18} />, link: "/admin/settings" },
+                  {
+                    label: "Menus",
+                    icon: <LayoutGrid size={18} />,
+                    link: "/admin/menus",
+                  },
+                  {
+                    label: "Orders",
+                    icon: <ShoppingBag size={18} />,
+                    link: "/admin/orders",
+                  },
+                  {
+                    label: "Users",
+                    icon: <Users size={18} />,
+                    link: "/admin/user-management",
+                  },
+                  {
+                    label: "Settings",
+                    icon: <Settings size={18} />,
+                    link: "/admin/settings",
+                  },
                 ].map((act, idx) => (
                   <Link
                     key={idx}
                     href={act.link}
                     className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-gray-50 hover:bg-[#1A4E11] hover:text-white transition-all group"
                   >
-                    <span className="text-gray-400 group-hover:text-white">{act.icon}</span>
-                    <span className="text-[10px] font-black uppercase tracking-tighter">{act.label}</span>
+                    <span className="text-gray-400 group-hover:text-white">
+                      {act.icon}
+                    </span>
+                    <span className="text-[10px] font-black uppercase tracking-tighter">
+                      {act.label}
+                    </span>
                   </Link>
                 ))}
               </div>
@@ -701,19 +775,36 @@ export default function DashboardPage() {
               </h3>
               <div className="space-y-6">
                 {[
-                  { label: "Direct", val: trafficStats.direct, color: "#4F46E5" },
-                  { label: "Social", val: trafficStats.social, color: "#F59E0B" },
-                  { label: "Organic", val: trafficStats.organic, color: "#EF4444" },
+                  {
+                    label: "Direct",
+                    val: trafficStats.direct,
+                    color: "#4F46E5",
+                  },
+                  {
+                    label: "Social",
+                    val: trafficStats.social,
+                    color: "#F59E0B",
+                  },
+                  {
+                    label: "Organic",
+                    val: trafficStats.organic,
+                    color: "#EF4444",
+                  },
                 ].map((t, idx) => (
                   <div key={idx} className="space-y-2">
                     <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
                       <span className="text-gray-400">{t.label}</span>
-                      <span className="text-gray-900">{getTrafficPercent(t.val)}%</span>
+                      <span className="text-gray-900">
+                        {getTrafficPercent(t.val)}%
+                      </span>
                     </div>
                     <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all duration-1000"
-                        style={{ width: `${getTrafficPercent(t.val)}%`, backgroundColor: t.color }}
+                        style={{
+                          width: `${getTrafficPercent(t.val)}%`,
+                          backgroundColor: t.color,
+                        }}
                       />
                     </div>
                   </div>
@@ -746,7 +837,10 @@ export default function DashboardPage() {
               lowStockItems.map((item) => (
                 <div
                   key={item._id}
-                  onClick={() => { setSelectedItem(item); setIsModalOpen(true); }}
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setIsModalOpen(true);
+                  }}
                   className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-3xl border border-gray-100 hover:shadow-lg transition-all cursor-pointer group"
                 >
                   <div className="relative w-16 h-16 rounded-2xl overflow-hidden shrink-0 border border-white">
@@ -758,7 +852,9 @@ export default function DashboardPage() {
                     />
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-xs font-black text-gray-800 line-clamp-1">{item.title}</h4>
+                    <h4 className="text-xs font-black text-gray-800 line-clamp-1">
+                      {item.title}
+                    </h4>
                     <p className="text-[9px] text-gray-400 font-bold uppercase">
                       ৳{item.price} • {item.categoryId?.name}
                     </p>
@@ -766,7 +862,9 @@ export default function DashboardPage() {
                       <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
                         <div
                           className="h-full bg-red-500 rounded-full"
-                          style={{ width: `${Math.min((item.stock / 15) * 100, 100)}%` }}
+                          style={{
+                            width: `${Math.min((item.stock / 15) * 100, 100)}%`,
+                          }}
                         />
                       </div>
                       <span className="text-[10px] font-black text-red-500 uppercase">

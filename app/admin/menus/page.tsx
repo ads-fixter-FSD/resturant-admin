@@ -16,12 +16,13 @@ import { matchSorter } from "match-sorter";
 import { useMenu } from "@/app/hooks/useMenu";
 import { useCategories } from "@/app/hooks/useCategories";
 import { useChefs } from "@/app/hooks/useChefs";
-import { IMenu } from "@/types/menu";
+
 import Image from "next/image";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import PaginationDashboard from "@/components/shared/PaginationDashboard";
 import { MenuModal } from "@/components/admin-dashboard/MenuModal";
 import { deleteMenuFromDB } from "@/app/modules/menu/menu.api";
+import { IMenu } from "@/types/menu";
 
 const MenuPage: React.FC = () => {
   // Data fetching
