@@ -29,6 +29,7 @@ export const MenuModal = ({ isOpen, onClose, editData, categories, chefs, onSucc
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+// use effect
 
   useEffect(() => {
     if (editData && isOpen) {
